@@ -1,5 +1,6 @@
 import RPI.GPIO as GPIO
 import Adafruit_DHT
+import time
 
 # 핀 배치들을 변수로 저장해둠
 pin_led_first_floor = 1
@@ -52,6 +53,18 @@ class smartFarm_Device:
         pass
     def set_light_state(self, level:int, state:str) :
         '''1층 혹은 2층 LED 전원 상태를 지정하는 함수'''
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(led_pin, GPIO.OUT)
+        GPIO.setup(relay_pin, GPIO.OUT)
+        pass
+
+    def _set_light_on(self):
+        GPIO.output(relay_pin, GPIO.HIGH)
+        GPIO.output(led_pin, GPIO.HIGH)
+        pass
+    def _sel_light_off(self):
+        GPIO.output(relay_pin, GPIO.LOW)
+        GPIO.output(led_pin, GPIO.LOW)
         pass
     def get_light_state(self)->list[str] :
         '''1층과 2층 LED 전원 상태를 얻어오는 함수 ['on'/'off', 'on'/'off']'''
